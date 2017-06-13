@@ -15,9 +15,9 @@ import {
   CardText
 } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import { Rating } from 'material-ui-rating';
 import moment from 'moment';
-
 import ReviewForm from './ReviewForm';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -39,14 +39,28 @@ const styles = {
 class MealDetails extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      open: false
+    };
     this.addReview = this.addReview.bind(this);
     this.didReview = this.didReview.bind(this);
     this.visitChefProfile = this.visitChefProfile.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchMealDetail(id);
+  }
+
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    this.setState({open: false});
   }
 
   addReview() {
@@ -69,10 +83,24 @@ class MealDetails extends Component {
       return <div>Loading...</div>;
     }
 
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleClose}
+      />,
+    ];
+
     return (
       <div onLoad={this.didReview}>
         <Card className="details-card">
-          <CardHeader 
+          <CardHeader
             onClick={this.visitChefProfile}
             title={currentMeal.chef.username}
             subtitle="Chef"
