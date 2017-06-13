@@ -87,6 +87,10 @@
 .col {
   flex: 1;
 }
+
+.modal {
+	margin-left: 10px;
+}
 .details-image {
   width: 100%;
   height: 500px;
