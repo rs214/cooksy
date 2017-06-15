@@ -5,7 +5,8 @@ import {
   reviewMeal,
   rateMeal,
   toggleReview,
-  didReview
+  didReview,
+  postPurchaseDetails
 } from '../actions';
 import {
   Card,
@@ -18,6 +19,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { Rating } from 'material-ui-rating';
 import moment from 'moment';
+
+import MaterialUIDialog from '../components/Dialog';
 import ReviewForm from './ReviewForm';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -48,19 +51,12 @@ class MealDetails extends Component {
     this.visitChefProfile = this.visitChefProfile.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchMealDetail(id);
-  }
-
-  handleOpen() {
-    this.setState({open: true});
-  }
-
-  handleClose() {
-    this.setState({open: false});
   }
 
   addReview() {
@@ -70,6 +66,22 @@ class MealDetails extends Component {
   didReview() {
     this.props.didReview(this.props.currentMeal);
   }
+
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    const quantity = document.getElementById('quantity').value || 1;
+    const { id } = this.props.match.params;
+    this.setState({open: false});
+    this.props.postPurchaseDetails({num: quantity, mealId: id});
+  }
+
+  handleCancel() {
+    this.setState({open: false});
+  }
+
 
   visitChefProfile() {
     const chefId = this.props.currentMeal.chef.id;
@@ -82,20 +94,6 @@ class MealDetails extends Component {
     if (Object.keys(currentMeal).length === 0) {
       return <div>Loading...</div>;
     }
-
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.handleClose}
-      />,
-    ];
 
     return (
       <div onLoad={this.didReview}>
@@ -126,7 +124,15 @@ class MealDetails extends Component {
               <div>
                 {currentMeal.name}
                 <span className="pull-right">
-                  <RaisedButton label="Purchase" primary={true} />
+                <RaisedButton label="Purchase" primary={true} onTouchTap={this.handleOpen} />
+                <MaterialUIDialog
+                  handleCancel={this.handleCancel}
+                  handleOpen={this.handleOpen}
+                  handleClose={this.handleClose}
+                  title="Please confirm your purchase"
+                  isOpen= {this.state.open}
+                  price={currentMeal.price}
+                />
                 </span>
               </div>
             }
@@ -270,5 +276,6 @@ export default connect(mapStateToProps, {
   reviewMeal,
   rateMeal,
   toggleReview,
-  didReview
+  didReview,
+  postPurchaseDetails
 })(MealDetails);

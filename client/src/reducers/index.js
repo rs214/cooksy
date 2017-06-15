@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   upcomingMeals: UpcomingMealReducer,
   currentMeal: CurrentMealReducer,
   purchase: PurchaseReducer,
-  requests: RequestReducer
+  requests: RequestReducer,
   chef: ChefReducer
 });
 

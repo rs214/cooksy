@@ -1,6 +1,7 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const MaterialUIDialog = function(props) {
 
@@ -26,10 +27,11 @@ const MaterialUIDialog = function(props) {
       open={props.isOpen}
       onRequestClose={props.handleClose}
     >
-      Quantity: <input id="quantity" /><br/>
+      Quantity: <input id="quantity"/><br/>
       Price per serving: ${props.price}<br/>
     </Dialog>
   )
 }
 
 export default MaterialUIDialog;
+
