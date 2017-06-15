@@ -76,6 +76,7 @@ class MealDetails extends Component {
     const { id } = this.props.match.params;
     this.setState({open: false});
     this.props.postPurchaseDetails({num: quantity, mealId: id});
+    console.log(document.getElementById('quantity').value * this.props.currentMeal.price)
   }
 
   handleCancel() {

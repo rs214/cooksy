@@ -6,10 +6,23 @@
   margin: 14px;
 }
 
-.griddiv {
+.mealscontainer {
   margin-top: 150px;
 }
 
-.mealscontainer {
-  margin-top: 150px;
+.col {
+  flex: 1;
+}
+
+.card {
+  width: 450px;
+  text-align: center;
+}
+.purchase-images {
+  width: 125px;
+}
+
+.purchase-title {
+  text-decoration: underline;
+  color: black;
 }
