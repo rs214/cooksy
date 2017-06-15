@@ -1,28 +1,24 @@
 .chef-info {
-	padding-left: 400px;
+	padding-left: 250px;
+}
+
+.chefcontainer {
+  width: 500px;
 }
 
 .request {
   margin: 14px;
 }
 
-.mealscontainer {
-  margin-top: 150px;
+#mealhistory {
+  margin-bottom: 30px;
 }
 
-.col {
-  flex: 1;
+#chef-username{
+  margin-left: 15px;
 }
 
 .card {
   width: 450px;
   text-align: center;
-}
-.purchase-images {
-  width: 125px;
-}
-
-.purchase-title {
-  text-decoration: underline;
-  color: black;
 }

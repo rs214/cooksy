@@ -5,11 +5,14 @@ import Avatar from 'material-ui/Avatar';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import { Rating } from 'material-ui-rating';
-import { fetchMealsByChef, fetchChefDetails, getChefsRequests } from '../actions/index';
+import { fetchMealsByChef, fetchChefDetails, getChefsRequests, orderRequestedMeal } from '../actions/index';
 import HorizontalGrid from '../components/HorizontalGrid';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card } from 'material-ui/Card';
 import RequestCard from '../components/RequestCard';
+import MealGridElement from '../components/MealGridElement';
+import RequestGridElementChef from '../components/RequestGridElementChef';
+import { getTopRequests } from '../utils/RequestHelper';
 
 import './ChefProfile.css';
 
@@ -24,6 +27,7 @@ class ChefProfile extends Component {
 
   render() {
     const { meals, chef, requests } = this.props;
+    const topRequests = requests && getTopRequests(requests, 3);
     {console.log(this.props.requests)}
     if (!meals) {
       return <p>Loading.....</p>;
@@ -36,44 +40,30 @@ class ChefProfile extends Component {
         <List>
           <ListItem
             disabled={true}
-            leftAvatar={<Avatar src={chef.image} size={300} />}
+            leftAvatar={<Avatar src={chef.image} size={200} />}
           />
           <div className="chef-info">
-            <h3>{chef.username}</h3>
+            <h3 id="chef-username">{chef.username}</h3>
             <Rating value={Math.ceil(chef.rating)} max={5} readOnly={true} />
-            <RaisedButton className="request" label="Request a Meal" primary={true} />
+            <RaisedButton className="request" label="Contact" primary={true} />
           </div>
         </List>
-        <div className="flex-grid">
-          <div className="mealscontainer">
-            <Card className="card">
-              <h2>Meal History</h2>
-              {dates.length !== 0 && _.map(dates, (date) => (
-                <Card>
-                  <p id="date">{new Date(date).toString().substr(0, 15)}</p>
-                  <HorizontalGrid key={date} meals={this.props.meals[date]}/>
-                </Card>
-              ))}
-            </Card>
+        <div className="requestcontainer">
+          <h2>Requests</h2>
+          <div>
+            {Object.keys(topRequests).length > 0 &&
+              <HorizontalGrid orderRequestedMeal={this.props.orderRequestedMeal} gridObject={topRequests} GridComponent={RequestGridElementChef}/>
+            }
           </div>
-          <div className="col">
-            <h1 className="purchase-title">Requests</h1>
-            <div>
-            <Card className="card">
-              {_.map(requests, (request) => (
-                <Card key={request.requestId} >
-                  <RequestCard
-                    requestId={request.requestId}
-                    numRequired={request.numRequired}
-                    numOrdered={request.numOrdered}
-                    deadline={request.deadline}
-                    meal={request.meal}
-                  />
-                </Card>
-              ))}
-            </Card>
-            </div>
-          </div>
+        </div>
+        <div className="mealscontainer">
+            <h2 id="mealhistory">Meal History</h2>
+            {dates.length !== 0 && _.map(dates, (date) => (
+              <div key={date}>
+                <p id="date">{new Date(date).toString().substr(0, 15)}</p>
+                <HorizontalGrid gridObject={meals[date]} GridComponent={MealGridElement}/>
+              </div>
+            ))}
         </div>
       </div>
     );
