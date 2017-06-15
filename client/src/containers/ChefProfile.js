@@ -45,7 +45,9 @@ class ChefProfile extends Component {
           <div className="chef-info">
             <h3 id="chef-username">{chef.username}</h3>
             <Rating value={Math.ceil(chef.rating)} max={5} readOnly={true} />
-            <RaisedButton className="request" label="Contact" primary={true} />
+            <a href={`mailto:${chef.email}`}>
+              <RaisedButton className="request" label="Contact" primary={true} />
+            </a>
           </div>
         </List>
         <div className="requestcontainer">
