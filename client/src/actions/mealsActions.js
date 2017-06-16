@@ -10,6 +10,7 @@ export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
 export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
 export const FETCH_MEALS_BY_DATE = 'FETCH_MEALS_BY_DATE';
 export const FETCH_UPCOMING_MEALS = 'FETCH_UPCOMING_MEALS';
+export const FETCH_ORDERED_MEALS_BY_CHEF = 'FETCH_ORDERED_MEALS_BY_CHEF';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -31,6 +32,17 @@ export function fetchMeals() {
 }
 
 export function fetchMealsByChef() {
+  const headers = attachTokenToTheHeader();
+
+  const request = axios.get('/api/chefs/meals', { headers: headers });
+
+  return {
+    type: FETCH_MEALS_BY_CHEF,
+    payload: request
+  };
+}
+
+export function fetchOrderedMealsByChef() {
   const headers = attachTokenToTheHeader();
   let mealStorage = {};
   let time = [];
@@ -62,7 +74,7 @@ export function fetchMealsByChef() {
     });
 
   return {
-    type: FETCH_MEALS_BY_CHEF,
+    type: FETCH_ORDERED_MEALS_BY_CHEF,
     payload: request
   };
 }

@@ -3,7 +3,8 @@ import {
   CREATE_MEAL,
   FETCH_MEALS_BY_CHEF,
   GET_NEAR_BY_MEALS,
-  FETCH_MEALS_BY_DATE
+  FETCH_MEALS_BY_DATE,
+  FETCH_ORDERED_MEALS_BY_CHEF
 } from '../actions/index';
 import _ from 'lodash';
 
@@ -11,8 +12,10 @@ export default function(state = {}, action) {
   switch (action.type) {
     case FETCH_MEALS:
       return _.mapKeys(action.payload.data, 'id');
-    case FETCH_MEALS_BY_CHEF:
+    case FETCH_ORDERED_MEALS_BY_CHEF:
       return action.payload;
+    case FETCH_MEALS_BY_CHEF:
+      return action.payload.data;
     case GET_NEAR_BY_MEALS:
       return _.mapKeys(action.payload.data, 'id');
     case FETCH_MEALS_BY_DATE:

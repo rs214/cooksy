@@ -86,7 +86,7 @@ class MealDetails extends Component {
 
   visitChefProfile() {
     const chefId = this.props.currentMeal.chef.id;
-    this.props.history.push(`/chefs-profile/${chefId}`)
+    this.props.history.push(`/chef-profile/${chefId}`)
   }
 
   render() {

@@ -32,7 +32,9 @@ class NearByMealsListItem extends Component {
       handleMarkerOver,
       handleMarkerOut
     } = this.props;
-
+    if (Array.isArray(meal)) {
+      return <div> Loading... </div>;
+    }
     const renderReadMore = (mealId) => (
       <span>
         ...
@@ -78,7 +80,7 @@ class NearByMealsListItem extends Component {
 
             <Media className="NearByMeals-meal-aux">
               <Media.Left>
-                 <Link to={`/chefs-profile/${meal.chef.id}`} target="#" >
+                 <Link to={`/chef-profile/${meal.chef.id}`} target="#" >
                     <Avatar
                        src={meal.chef.image}
                        size={30}

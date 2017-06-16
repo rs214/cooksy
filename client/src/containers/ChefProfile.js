@@ -5,7 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import { Rating } from 'material-ui-rating';
-import { fetchMealsByChef, fetchChefDetails, getChefsRequests, orderRequestedMeal } from '../actions/index';
+import { fetchOrderedMealsByChef, fetchChefDetails, getChefsRequests, orderRequestedMeal } from '../actions/index';
 import HorizontalGrid from '../components/HorizontalGrid';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card } from 'material-ui/Card';
@@ -21,14 +21,14 @@ class ChefProfile extends Component {
     const { id } = this.props.match.params;
     console.log(this.props.match.params)
     this.props.fetchChefDetails(id);
-    this.props.fetchMealsByChef();
+    this.props.fetchOrderedMealsByChef();
     this.props.getChefsRequests(id);
   }
 
   render() {
     const { meals, chef, requests } = this.props;
     const topRequests = requests && getTopRequests(requests, 3);
-    {console.log(this.props.requests)}
+    {console.log(this.props.meals)}
     if (!meals) {
       return <p>Loading.....</p>;
     }
@@ -80,4 +80,4 @@ function mapStateToProps({ meals, chef, requests }) {
   };
 }
 
-export default connect(mapStateToProps, { fetchMealsByChef, fetchChefDetails, getChefsRequests })(ChefProfile);
+export default connect(mapStateToProps, { fetchOrderedMealsByChef, fetchChefDetails, getChefsRequests })(ChefProfile);
